@@ -1,4 +1,7 @@
+from flask import Flask, request
 from scipy.stats import poisson
+
+app = Flask(__name__)
 
 
 def expectedGoals(data: dict, place: str, time: str) -> float:
@@ -32,7 +35,24 @@ def teamOdds(data: dict, odds: list[int], place: str, time: str) -> dict:
 
         calculatedOdds.append({
             "over": round(over, 2),
-            "under": round(under, 2)
+            "under": round(under, 2),
+            "odd": odd
         })
 
     return calculatedOdds
+
+
+@app.route('/odds', methods=['POST'])
+def odds():
+    data: {
+        "data": dict,
+        "odds": list[int],
+        "place": str,
+        "time": str
+    } = request.get_json()
+
+    return teamOdds(**data)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
