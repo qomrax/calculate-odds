@@ -1,9 +1,9 @@
 import { SessionAxios } from 'backend-helper-kit'
 import { config } from '../../config'
-import { calculateOdds, odd } from '../types/odds/output-type'
+import { calculateOdds } from '../types/odds/output-type'
 
 export const calculator = new SessionAxios({
-    baseURL: `http://localhost:${config.PORT}`
+    baseURL: `http://127.0.0.1:${config.FLASK_PORT}`
 })
 
 export async function calculateOdds(data: object, odds: number[], time: string, place: string): Promise<calculateOdds> {
