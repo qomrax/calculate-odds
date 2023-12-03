@@ -1,5 +1,7 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from scipy.stats import poisson
+
+import argparse
 
 app = Flask(__name__)
 
@@ -42,17 +44,23 @@ def teamOdds(data: dict, odds: list[int], place: str, time: str) -> dict:
     return calculatedOdds
 
 
-@app.route('/odds', methods=['POST'])
-def odds():
-    data: {
-        "data": dict,
-        "odds": list[int],
-        "place": str,
-        "time": str
-    } = request.get_json()
-
-    return teamOdds(**data)
+@app.route('/team-odds', methods=['POST'])
+def calculate_team_odds():
+    try:
+        data = request.get_json()
+        result = teamOdds(**data)
+        return jsonify({"result": result})
+    except Exception as e:
+        return jsonify({"error": f"Error: {e}"}), 500
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", default=5000, type=int,
+                        help="Port to run the server on")
+    parser.add_argument("--env", default="development",
+                        type=str, choices=["development", "production"])
+
+    args = parser.parse_args()
+
+    app.run(port=args.port, debug=args.env == "development")
