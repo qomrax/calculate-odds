@@ -132,3 +132,5 @@ config.ts
 
 .ipynb_checkpoints/
 .ipynb
+
+.pyc
