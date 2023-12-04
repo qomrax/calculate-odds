@@ -30,14 +30,20 @@ def teamOdds(data: dict, odds: list[float], place: str, time: str) -> dict:
 
     calculatedOdds = []
     for odd in odds:
-        over = data["payback"] / \
-            (1 - poisson.cdf(odd - data["currentShots"][place], exGoals))
-        under = data["payback"] / \
-            poisson.cdf(odd - data["currentShots"][place], exGoals)
+        over = round(data["payback"] /
+                     (1 - poisson.cdf(odd - data["currentShots"][place], exGoals)), 2)
+        under = round(data["payback"] /
+                      poisson.cdf(odd - data["currentShots"][place], exGoals), 2)
+
+        if over == float("inf") or over == float("-inf") or over != over:
+            over = None
+
+        if under == float("inf") or under == float("-inf") or under != under:
+            under = None
 
         calculatedOdds.append({
-            "over": round(over, 2),
-            "under": round(under, 2),
+            "over": over,
+            "under": under,
             "odd": odd
         })
 
@@ -49,9 +55,9 @@ def calculate_team_odds():
     try:
         data = request.get_json()
         result = teamOdds(**data)
-        return jsonify({"result": result})
+        return jsonify({"result": result}), 200
     except Exception as e:
-        return jsonify({"error": f"Error: {e}"}), 500
+        return jsonify({"error": f"Error: {e}"},  allow_nan=False), 500
 
 
 if __name__ == '__main__':
