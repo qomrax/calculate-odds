@@ -25,7 +25,7 @@ def expectedGoals(data: dict, place: str, time: str) -> float:
     return round(expectedGoalsInRemainingTime, 2)
 
 
-def teamOdds(data: dict, odds: list[int], place: str, time: str) -> dict:
+def teamOdds(data: dict, odds: list[float], place: str, time: str) -> dict:
     exGoals = expectedGoals(data, place, time)
 
     calculatedOdds = []
