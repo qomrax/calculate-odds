@@ -1,8 +1,10 @@
 import Joi from 'joi'
 
+export const numberOrNullOrUndefined = Joi.alternatives().try(Joi.number(), Joi.any()).required()
+
 export const odd = Joi.object({
-    over: Joi.number().required(),
-    under: Joi.number().required(),
+    over: numberOrNullOrUndefined,
+    under: numberOrNullOrUndefined,
     odd: Joi.number().required()
 })
 

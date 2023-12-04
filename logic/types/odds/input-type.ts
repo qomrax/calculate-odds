@@ -5,14 +5,43 @@
 
 export interface calculateOdds {
   body: {
-    data: object;
+    data: {
+      currentScore: {
+        away: number;
+        home: number;
+      };
+      currentShots: {
+        away: number;
+        home: number;
+      };
+      expectedAddedTime: number;
+      liveXg: {
+        away: number;
+        home: number;
+      };
+      payback: number;
+      preXg: {
+        away: number;
+        home: number;
+      };
+      preXs: {
+        away: number;
+        home: number;
+      };
+      time: number;
+    };
     odds: number[];
-    place: string;
-    time: string;
+    place: 'home' | 'away';
+    time: 'all' | 'remain';
   };
   query?: any;
   user?: {
     permissions?: any;
     username: string;
   };
+}
+
+export interface place {
+  away: number;
+  home: number;
 }

@@ -3,14 +3,16 @@
  * Do not modify this file manually
  */
 
-export type calculateOdds = {
+export type calculateOdds = ({
   odd: number;
-  over: number;
-  under: number;
-}[];
+  over: number | any;
+  under: number | any;
+})[];
+
+export type numberOrNullOrUndefined = number | any;
 
 export interface odd {
   odd: number;
-  over: number;
-  under: number;
+  over: number | any;
+  under: number | any;
 }

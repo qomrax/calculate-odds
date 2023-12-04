@@ -7,7 +7,7 @@ export const calculator = new SessionAxios({
 })
 
 export async function calculateOdds(data: object, odds: number[], time: string, place: string): Promise<calculateOdds> {
-    return (
+    let res = (
         await calculator.request({
             method: 'POST',
             url: '/team-odds',
@@ -18,5 +18,9 @@ export async function calculateOdds(data: object, odds: number[], time: string, 
                 place
             }
         })
-    ).data.result
+    ).data
+
+    // string to object
+
+    return res.result
 }
