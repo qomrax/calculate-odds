@@ -15,6 +15,8 @@ const avalidator = wrapper(inputValidators, outputValidators, config)
 export class OddsLogic {
     @avalidator
     static async calculateOdds(params: inputTypes.calculateOdds): Promise<outputTypes.calculateOdds> {
-        return await calculateOdds(params.body.data, params.body.odds, params.body.time, params.body.place)
+        let res = await calculateOdds(params.body.data, params.body.odds, params.body.time, params.body.place)
+
+        return res
     }
 }
